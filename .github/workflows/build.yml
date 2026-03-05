@@ -1,4 +1,4 @@
-name: Debug Workflow
+name: Compile Tulip Kernel
 
 on:
   push:
@@ -6,20 +6,23 @@ on:
       - main
 
 jobs:
-  debug:
+  compile:
     runs-on: ubuntu-latest
     steps:
-      - name: Open shell
+      - name: Checkout tulip-kernel repository
+        uses: actions/checkout@v2
+        with:
+          repository: 'l4feer/tulip-kernel'
+          path: 'tulip-kernel'
+
+      - name: Set up Android build environment
+        uses: actions/setup-android@v1
+
+      - name: Compile kernel
         run: |
-          sudo apt install clang gcc
-          git clone https://github.com/l4feer/tulip-kernel -b feature
-      
-         
-      - name: Open shell
-        run: |
-           cd tulip-kernel
-           make O=out tulip-newcam_defconfig
-      - name: Open shell
-        run:  make O=out -j$(nproc)
-      - name: Open shell
-        run:
+          cd tulip-kernel
+          export ARCH=arm64
+          export CROSS_COMPILE=aarch64-linux-android-
+          export SUBARCH=arm64
+          make tulip_defconfig
+          make -j$(nproc)
