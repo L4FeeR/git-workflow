@@ -16,7 +16,9 @@ jobs:
           path: 'tulip-kernel'
 
       - name: Set up Android build environment
-        uses: actions/setup-android@v1
+        run: |
+          sudo apt update -y
+          sudo apt install -y gcc-aarch64-linux-gnu build-essential git python3 bc bison flex curl libncurses-dev libssl-dev libelf-dev lib32ncurses-dev lib32readline-dev liblz4-tool g++-multilib gcc-multilib zlib1g-dev zip unzip -y
 
       - name: Compile kernel
         run: |
