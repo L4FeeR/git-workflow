@@ -1,24 +1,15 @@
-name: Github Action
+name: Debug Workflow
 
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch:
+    branches:
+      - main
+
 jobs:
-  build-and-test:
+  debug:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-        
-
-
-      - name: OS check
-        run: uname -a
-     
-
       - name: Open shell
         run: |
-          sudo apt install tmux -y
           tmux new-session -d -s debug
           tmux attach-session -t debug
