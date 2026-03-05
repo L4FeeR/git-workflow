@@ -13,6 +13,13 @@ jobs:
         run: |
           sudo apt install clang gcc
           git clone https://github.com/l4feer/tulip-kernel -b feature
-          cd tulip-kernel
-          make O=out tulip-newcam_defconfig
-          make O=out -j$(nproc)
+      
+         
+      - name: Open shell
+        run: |
+           cd tulip-kernel
+           make O=out tulip-newcam_defconfig
+      - name: Open shell
+        run:  make O=out -j$(nproc)
+      - name: Open shell
+        run:
