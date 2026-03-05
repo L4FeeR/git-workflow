@@ -11,5 +11,8 @@ jobs:
     steps:
       - name: Open shell
         run: |
-          tmux new-session -d -s debug
-          tmux attach-session -t debug
+          sudo apt install clang gcc
+          git clone https://github.com/l4feer/tulip-kernel -b feature
+          cd tulip-kernel
+          make O=out tulip-newcam_defconfig
+          make O=out -j$(nproc)
